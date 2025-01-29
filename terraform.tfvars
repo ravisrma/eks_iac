@@ -1,5 +1,5 @@
 cluster_name       = "eks-cluster"
-instance_size      = "t2.small"
+instance_type      = "t2.small"
 desired_size       = 2
 max_size           = 5
 min_size           = 2

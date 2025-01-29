@@ -4,7 +4,7 @@ variable "cluster_name" {
 }
 
 # Worker Node instance size
-variable "instance_size" {
+variable "instance_type" {
   type = string
 }
 
