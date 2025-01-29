@@ -36,8 +36,7 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3.1.2
-        with:
-            terraform_version: 3.1.2
+
 
       - name: Terraform fmt
         id: fmt
@@ -121,8 +120,7 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3.1.2
-        with:
-          terraform_version: 3.1.2
+
 
       - name: Terraform Init
         env:
