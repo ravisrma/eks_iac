@@ -30,9 +30,9 @@ variable "worker_arn" {
 }
 
 #Worker Node instance size
-variable "instance_size" {
+variable "instance_type" {
   type        = string
-  description = "Worker node's instance size"
+  description = "Worker node's instance type"
 }
 
 # node count

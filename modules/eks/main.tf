@@ -18,7 +18,7 @@ resource "aws_eks_cluster" "eks" {
 resource "aws_launch_template" "eks_launch_template" {
   name_prefix   = "eks-launch-template-"
   image_id      = "ami-0de390ef01354cadf"  # Replace with the latest Amazon EKS optimized AMI for your region
-  instance_type = "t3.medium"               # Specify your desired instance type
+  instance_type = var.instance_type              # Specify your desired instance type
   vpc_security_group_ids = [var.eks_nodes_sg_id]
 
   key_name = var.key_name
