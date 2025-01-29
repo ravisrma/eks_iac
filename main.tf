@@ -32,7 +32,7 @@ module "eks" {
   source = "./modules/eks"
   master_arn = module.iam.master_arn
   worker_arn = module.iam.worker_arn
-  instance_size = var.instance_type
+  instance_type = var.instance_type
   desired_size = var.desired_size
   max_size = var.max_size
   min_size = var.min_size
