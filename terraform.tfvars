@@ -1,5 +1,5 @@
 cluster_name       = "eks-cluster"
-instance_type      = "t2.small"
+instance_type      = "t3.medium"
 desired_size       = 2
 max_size           = 5
 min_size           = 2
@@ -10,3 +10,6 @@ kube-proxy-version = "v1.31.3-eksbuild.2"
 coredns-version    = "v1.11.4-eksbuild.1"
 amazon_ebs_csi_driver_version = "v1.37.0-eksbuild.1"
 key_name           = "test"
+environment = "Dev"
+service     = "MyService"
+volume_size = 20

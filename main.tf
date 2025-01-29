@@ -48,4 +48,7 @@ module "eks" {
   vpc-cni-version = var.vpc-cni-version
   kube-proxy-version = var.kube-proxy-version
   coredns-version = var.coredns-version
+  environment = var.environment
+  service = var.service
+  volume_size = var.volume_size
 }

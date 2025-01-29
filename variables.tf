@@ -53,3 +53,17 @@ variable "amazon_ebs_csi_driver_version" {
   type        = string
   
 }
+variable "environment" {
+  description = "The environment for the resources (e.g., Dev, Stage, Prod)"
+  type        = string
+}
+
+variable "service" {
+  description = "The service name for the resources"
+  type        = string
+}
+
+variable "volume_size" {
+  description = "The volume size for the EBS volume"
+  type        = number
+}

@@ -22,7 +22,14 @@ resource "aws_launch_template" "eks_launch_template" {
   vpc_security_group_ids = [var.eks_nodes_sg_id]
 
   key_name = var.key_name
-
+  
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      volume_size = var.volume_size
+      volume_type = "gp3"
+    }
+  }
   user_data = base64encode(<<-EOF
               #!/bin/bash
               set -o xtrace
@@ -35,6 +42,8 @@ resource "aws_launch_template" "eks_launch_template" {
 
     tags = {
       Name        = "EKS-Node-${aws_eks_cluster.eks.name}"
+      Environment = var.environment
+      Service     = var.service
     }
   }
 }
@@ -59,6 +68,8 @@ resource "aws_eks_node_group" "eks_nodes" {
 
   tags = {
     Name        = "EKS-NodeGroup-${aws_eks_cluster.eks.name}"
+    Environment = var.environment
+    Service     = var.service
   }
 
   depends_on = [aws_eks_cluster.eks]
