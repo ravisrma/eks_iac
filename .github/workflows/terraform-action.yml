@@ -107,11 +107,13 @@ jobs:
         run: aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name eks-cluster
 
       - name: Install eksctl
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/v0.101.0/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
           sudo mv /tmp/eksctl /usr/local/bin
   
       - name: Run setup_eks_load_balancer.sh
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: bash setup_eks_load_balancer.sh
 
   destroy:
