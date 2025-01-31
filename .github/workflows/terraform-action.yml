@@ -101,7 +101,22 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
-      # Update Kubeconfig
+        
+      - name: Wait for EKS Cluster to be Active
+        run: |
+          CLUSTER_NAME="eks-cluster"
+          REGION="${{ secrets.AWS_REGION }}"
+          while true; do
+            STATUS=$(aws eks describe-cluster --name $CLUSTER_NAME --region $REGION --query "cluster.status" --output text)
+            if [ "$STATUS" == "ACTIVE" ]; then
+              echo "Cluster is active"
+              break
+            fi
+            echo "Waiting for cluster to be active..."
+            sleep 30
+          done
+
+        # Update Kubeconfig
       - name: Update kubeconfig
         run: aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name eks-cluster
 
