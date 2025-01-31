@@ -159,7 +159,6 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}  
 
     - name: Update kubeconfig
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name eks-cluster
 
     - name: Install eksctl
