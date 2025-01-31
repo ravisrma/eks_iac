@@ -11,6 +11,10 @@ on:
         description: "Set to true to destroy resources."
         required: false
         default: "false"
+      alb:
+        description: "Set to true to deploy ALB resources."
+        required: false
+        default: "false"
 
 permissions:
   contents: read
