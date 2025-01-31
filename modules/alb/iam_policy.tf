@@ -3,5 +3,5 @@ resource "aws_iam_policy" "alb_policy" {
   path        = "/"
   description = "IAM policy for ALB Controller"
 
-  policy = file("iam_policy.json")
+  policy = file("${path.module}/iam_policy.json")
 }
