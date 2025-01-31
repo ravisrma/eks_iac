@@ -49,3 +49,18 @@ module "eks" {
   kube-proxy-version = var.kube-proxy-version
   coredns-version = var.coredns-version
 }
+
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.cluster.token
+}
+
+module "alb" {
+  source              = "./modules/alb"
+  cluster_name        = var.cluster_name
+  vpc_id              = var.vpc_id
+  public_subnet_az1_id = var.public_subnet_az1_id
+  public_subnet_az2_id = var.public_subnet_az2_id
+  alb_security_group_id = var.alb_security_group_id
+}
