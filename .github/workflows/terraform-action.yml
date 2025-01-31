@@ -106,27 +106,10 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name eks-cluster
 
-  setup_load_balancer:
-    runs-on: ubuntu-latest
-    needs: deploy
-    if: github.event.inputs.setup_load_balancer == 'true'
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Install eksctl
-      run: |
-        curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/v0.101.0/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-        sudo mv /tmp/eksctl /usr/local/bin
-
-    - name: Run setup_eks_load_balancer.sh
-      run: bash setup_eks_load_balancer.sh
-  
   destroy:
     runs-on: ubuntu-latest
     needs: deploy
-    if: github.event.inputs.destroy == 'true'
+    if: ${{ github.event.inputs.destroy == 'true' }}
     defaults:
       run:
         shell: bash
@@ -154,3 +137,24 @@ jobs:
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve -input=false
+
+  alb:
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: ${{ github.event.inputs.alb == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install eksctl
+      run: |
+        curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/v0.101.0/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+        sudo mv /tmp/eksctl /usr/local/bin
+
+    - name: Run setup_eks_load_balancer.sh
+      run: bash setup_eks_load_balancer.sh
