@@ -49,11 +49,3 @@ module "eks" {
   kube-proxy-version = var.kube-proxy-version
   coredns-version = var.coredns-version
 }
-
-resource "null_resource" "setup_eks_load_balancer" {
-  provisioner "local-exec" {
-    command = "bash setup_eks_load_balancer.sh"
-  }
-
-  depends_on = [module.eks]
-}
