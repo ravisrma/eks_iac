@@ -102,9 +102,6 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
 
-        # Update Kubeconfig
-      - name: Update kubeconfig
-        run: aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name eks-cluster
 
   destroy:
     runs-on: ubuntu-latest
