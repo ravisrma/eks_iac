@@ -9,6 +9,7 @@ resource "aws_security_group" "eks_cluster_sg" {
 
   tags = {
     Name = "${var.cluster_name}-eks-cluster-sg"
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
 }
 
@@ -94,7 +95,15 @@ resource "aws_security_group_rule" "worker_node_to_worker_node_ingress_coredns_u
   self              = true
   description       = "Allow workers nodes to communicate with each other for coredns UDP"
 }
-
+resource "aws_security_group_rule" "ingress_allow_access_from_control_plane" {
+  type                     = "ingress"
+  protocol                 = "tcp"
+  from_port                = 9443
+  to_port                  = 9443
+  security_group_id        = aws_security_group.eks_nodes_sg.id
+  source_security_group_id = aws_security_group.eks_cluster_sg.id
+  description              = "Allow access from control plane to webhook port of AWS load balancer controller"
+}
 resource "aws_security_group_rule" "worker_node_ingress_kublet" {
   type                     = "ingress"
   from_port                = 10250
