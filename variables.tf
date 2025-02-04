@@ -24,7 +24,7 @@ variable "max_size" {
 }
 
 
-# Cluster Version
+# Cluster Version 
 variable "cluster_version" {
   type = string
 }
