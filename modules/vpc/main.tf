@@ -28,7 +28,9 @@ resource "aws_subnet" "public_subnet_az1" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "Public Subnet AZ1"
+    Name                          = "Public Subnet AZ1"
+    "kubernetes.io/role/elb"      = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 
@@ -40,7 +42,9 @@ resource "aws_subnet" "public_subnet_az2" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "Public Subnet AZ2"
+    Name                          = "Public Subnet AZ2"
+    "kubernetes.io/role/elb"      = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 
